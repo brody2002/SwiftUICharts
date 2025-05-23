@@ -13,7 +13,7 @@ import SwiftUI
  Contains information specific to the line and range fill.
  */
 public struct RangedLineDataSet: CTRangedLineChartDataSet, DataFunctionsProtocol {
-    
+    public var isSegmented: Bool
     public let id: UUID = UUID()
     public var dataPoints: [RangedLineChartDataPoint]
     public var legendTitle: String
@@ -33,13 +33,15 @@ public struct RangedLineDataSet: CTRangedLineChartDataSet, DataFunctionsProtocol
         legendTitle: String = "",
         legendFillTitle: String = "",
         pointStyle: PointStyle = PointStyle(),
-        style: RangedLineStyle = RangedLineStyle()
+        style: RangedLineStyle = RangedLineStyle(),
+        isSegmented: Bool
     ) {
         self.dataPoints = dataPoints
         self.legendTitle = legendTitle
         self.legendFillTitle = legendFillTitle
         self.pointStyle = pointStyle
         self.style = style
+        self.isSegmented = isSegmented
     }
     
     public typealias ID = UUID

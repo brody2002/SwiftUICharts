@@ -38,6 +38,8 @@ public final class MultiLineChartData: CTLineChartDataProtocol, GetDataProtocol,
     
     public var disableAnimation = false
     
+    internal final var isFilled: Bool
+    
     // MARK: Initializers
     /// Initialises a Multi Line Chart.
     ///
@@ -54,8 +56,10 @@ public final class MultiLineChartData: CTLineChartDataProtocol, GetDataProtocol,
         xAxisLabels: [String]? = nil,
         yAxisLabels: [String]? = nil,
         chartStyle: LineChartStyle = LineChartStyle(),
-        noDataText: Text = Text("No Data")
+        noDataText: Text = Text("No Data"),
+        isFilled: Bool
     ) {
+        self.isFilled = isFilled
         self.dataSets = dataSets
         self.metadata = metadata
         self.xAxisLabels = xAxisLabels
@@ -130,7 +134,7 @@ public final class MultiLineChartData: CTLineChartDataProtocol, GetDataProtocol,
                           minValue: self.minValue,
                           range: self.range,
                           animation: self.chartStyle.globalAnimation,
-                          isFilled: false,
+                          isFilled: self.isFilled,
                           disableAnimation: self.disableAnimation)
         }
     }

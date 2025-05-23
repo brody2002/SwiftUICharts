@@ -50,13 +50,15 @@ public struct MultiLineChart<ChartData>: View where ChartData: MultiLineChartDat
     
     private let minValue: Double
     private let range: Double
+    private let isFilled: Bool
     
     /// Initialises a multi-line, line chart.
     /// - Parameter chartData: Must be MultiLineChartData model.
-    public init(chartData: ChartData) {
+    public init(chartData: ChartData, isSegmented: Bool) {
         self.chartData = chartData
         self.minValue = chartData.minValue
         self.range = chartData.range
+        self.isFilled = chartData.isFilled
     }
 
     public var body: some View {
@@ -65,7 +67,15 @@ public struct MultiLineChart<ChartData>: View where ChartData: MultiLineChartDat
                 ZStack {
                     chartData.getAccessibility()
                     ForEach(chartData.dataSets.dataSets, id: \.id) { dataSet in
-                        MultiLineChartCell(chartData: chartData, dataSet: dataSet, minValue: minValue, range: range)
+                        if isFilled {
+                            ZStack {
+                                MultiLineChartCell(chartData: chartData, dataSet: dataSet, minValue: minValue, range: range, isFilled: true)
+                                    .animation(.none)
+                                MultiLineChartCell(chartData: chartData, dataSet: dataSet, minValue: minValue, range: range, isFilled: false)
+                            }
+                        } else {
+                            MultiLineChartCell(chartData: chartData, dataSet: dataSet, minValue: minValue, range: range, isFilled: false)
+                        }
                     }
                 }
                 // Needed for axes label frames
@@ -85,6 +95,7 @@ fileprivate struct MultiLineChartCell<ChartData>: View where ChartData: MultiLin
     let dataSet: LineDataSet
     let minValue: Double
     let range: Double
+    let isFilled: Bool
     
     var body: some View {
         if dataSet.style.lineColour.colourType == .colour,
@@ -94,8 +105,8 @@ fileprivate struct MultiLineChartCell<ChartData>: View where ChartData: MultiLin
                                    dataSet: dataSet,
                                    minValue: minValue,
                                    range: range,
-                                   colour: colour,
-                                   isFilled: false)
+                                   colour: isFilled ? colour : dataSet.style.strokeColor ?? colour,
+                                   isFilled: isFilled)
         } else if dataSet.style.lineColour.colourType == .gradientColour,
                   let colours = dataSet.style.lineColour.colours,
                   let startPoint = dataSet.style.lineColour.startPoint,

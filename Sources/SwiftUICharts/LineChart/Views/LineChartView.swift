@@ -51,10 +51,12 @@ public struct LineChart<ChartData>: View where ChartData: LineChartData {
     
     @ObservedObject private var chartData: ChartData
     @State private var timer: Timer?
+    private let isSegmented: Bool
     
     /// Initialises a line chart view.
     /// - Parameter chartData: Must be LineChartData model.
-    public init(chartData: ChartData) {
+    public init(chartData: ChartData, isSegmented: Bool) {
+        self.isSegmented = isSegmented
         self.chartData = chartData
     }
     

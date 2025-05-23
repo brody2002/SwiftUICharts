@@ -64,7 +64,6 @@ extension Path {
         
         var previousPoint = firstPoint
         var lastIndex: Int = 0
-        
         for index in 1 ..< dataPoints.count {
             let nextPoint = CGPoint(x: CGFloat(index) * x,
                                     y: (CGFloat(dataPoints[index].value - minValue) * -y) + rect.height)
@@ -83,6 +82,7 @@ extension Path {
                                      y: rect.height))
             path.closeSubpath()
         }
+        
         return path
     }
     

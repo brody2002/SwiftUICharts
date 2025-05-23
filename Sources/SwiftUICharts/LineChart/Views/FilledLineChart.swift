@@ -48,14 +48,17 @@ public struct FilledLineChart<ChartData>: View where ChartData: LineChartData {
     
     private let minValue: Double
     private let range: Double
+    private let isSegmented: Bool
     
     /// Initialises a filled line chart
     /// - Parameter chartData: Must be LineChartData model.
-    public init(chartData: ChartData) {
+    public init(chartData: ChartData, isSegmented: Bool) {
         self.chartData = chartData
         self.minValue = chartData.minValue
         self.range = chartData.range
+        self.isSegmented = isSegmented
         self.chartData.isFilled = true
+       
     }
     
     public var body: some View {

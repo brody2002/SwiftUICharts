@@ -24,7 +24,7 @@ public struct Stroke: Hashable, Identifiable {
     private let dashPhase: CGFloat
     
     public init(
-        lineWidth: CGFloat = 3,
+        lineWidth: CGFloat = 2,
         lineCap: CGLineCap = .round,
         lineJoin: CGLineJoin = .round,
         miterLimit: CGFloat = 10,

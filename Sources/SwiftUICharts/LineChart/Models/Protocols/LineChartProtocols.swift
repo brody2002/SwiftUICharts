@@ -95,7 +95,7 @@ public protocol CTLineChartDataSet: CTSingleDataSetProtocol {
      Sets the style for the Data Set (as opposed to Chart Data Style).
      */
     var style: Styling { get set }
-    
+    var isSegmented: Bool { get set }
     /**
      Sets the look of the markers over the data points.
      
