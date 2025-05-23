@@ -134,7 +134,7 @@ public extension CGFloat {
 
 public extension Color {
     /// Returns the relevant system background colour for the device.
-    public static var systemsBackground: Color {
+    static var systemsBackground: Color {
         #if os(iOS)
         return Color(.systemBackground)
         #elseif os(watchOS)
