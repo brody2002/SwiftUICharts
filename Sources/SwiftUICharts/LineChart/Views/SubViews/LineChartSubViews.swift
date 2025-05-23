@@ -139,14 +139,14 @@ internal struct LineChartColourSubView<CD, DS>: View where CD: CTLineChartDataPr
         currentPath.move(to: firstPoint)
         
         var previousPoint = firstPoint
-        var currentColor = dataPoints.first?.color ?? .appBlue
+        var currentColor = dataPoints.first?.color ?? Color.blue
         var skipColorChange = false
         
         for index in 1 ..< dataPoints.count {
             let nextPoint = CGPoint(x: CGFloat(index) * x, y: (CGFloat(dataPoints[index].value - minValue) * -y) + rect.height)
             let didChangeColor = currentColor != dataPoints[index].color
             
-            if currentColor == .appRed && dataPoints[index].color != .appRed && skipColorChange == false {
+            if currentColor == Color.red && dataPoints[index].color != Color.red && skipColorChange == false {
                 skipColorChange = true
             } else {
                 skipColorChange = false
@@ -156,7 +156,7 @@ internal struct LineChartColourSubView<CD, DS>: View where CD: CTLineChartDataPr
                 pathSegments.append(PathSegment(path: currentPath, color: currentColor, id: UUID()))
                 currentPath = Path()
                 currentPath.move(to: previousPoint)
-                currentColor = dataPoints[index].color ?? .appBlue
+                currentColor = dataPoints[index].color ?? Color.blue
             }
             currentPath.addCurve(
                 to: nextPoint,

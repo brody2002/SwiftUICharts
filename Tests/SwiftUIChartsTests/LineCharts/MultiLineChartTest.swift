@@ -22,25 +22,25 @@ final class MultiLineChartTest: XCTestCase {
     
     // MARK: - Data
     func testMultiLineMaxValue() {
-        let chartData = MultiLineChartData(dataSets: dataSet)
-        
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
+
         XCTAssertEqual(chartData.maxValue, 100)
     }
     func testMultiLineMinValue() {
-        let chartData = MultiLineChartData(dataSets: dataSet)
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
         XCTAssertEqual(chartData.minValue, 10)
     }
     func testMultiLineAverage() {
-        let chartData = MultiLineChartData(dataSets: dataSet)
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
         XCTAssertEqual(chartData.average, 53.75)
     }
     func testMultiLineRange() {
-        let chartData = MultiLineChartData(dataSets: dataSet)
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
         XCTAssertEqual(chartData.range, 90)
     }
     // MARK: Greater
     func testMultiIsGreaterThanTwoTrue() {
-        let chartData = MultiLineChartData(dataSets: dataSet)
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
         XCTAssertTrue(chartData.isGreaterThanTwo())
     }
     
@@ -53,14 +53,14 @@ final class MultiLineChartTest: XCTestCase {
                                                 LineDataSet(dataPoints: [
                                                     LineChartDataPoint(value: 50)
                                                 ])
-                                            ]))
+                                            ]), isFilled: true)
         XCTAssertFalse(chartData.isGreaterThanTwo())
     }
     
     // MARK: - Labels
     func testMultiLineGetYLabels() {
         let chartData = MultiLineChartData(dataSets: dataSet,
-                                           chartStyle: LineChartStyle(yAxisNumberOfLabels: 3))
+                                           chartStyle: LineChartStyle(yAxisNumberOfLabels: 3), isFilled: true)
         chartData.viewData.yAxisSpecifier = "%.2f"
         
         chartData.chartStyle.topLine  = .maximumValue
@@ -89,8 +89,8 @@ final class MultiLineChartTest: XCTestCase {
     // MARK: - Touch
     func testMultiLineGetDataPoint() {
         let rect: CGRect  = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let chartData = MultiLineChartData(dataSets: dataSet)
-        
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
+
         let touchLocationOne: CGPoint = CGPoint(x: 5, y: 25)
         chartData.infoView.touchOverlayInfo = []
         chartData.getDataPoint(touchLocation: touchLocationOne, chartSize: rect)
@@ -130,8 +130,8 @@ final class MultiLineChartTest: XCTestCase {
     
     func testMultiLineGetPointLocation() {
         let rect: CGRect  = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let chartData = MultiLineChartData(dataSets: dataSet)
-        
+        let chartData = MultiLineChartData(dataSets: dataSet, isFilled: true)
+
         // Data set 1 - point 1
         let touchLocationOneOne: CGPoint = CGPoint(x: 5, y: 25)
         let testOneOne: CGPoint = chartData.getPointLocation(dataSet: chartData.dataSets.dataSets[0],
