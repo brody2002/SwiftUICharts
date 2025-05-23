@@ -20,7 +20,7 @@ public struct LineChartDataPoint: CTStandardLineDataPoint, IgnoreMe {
     public var pointColour: PointColour?
     
     public var ignoreMe: Bool = false
-    
+    public var color: Color?
     public var legendTag: String = ""
     
     /// Data model for a single data point with colour for use with a line chart.
@@ -35,12 +35,14 @@ public struct LineChartDataPoint: CTStandardLineDataPoint, IgnoreMe {
         xAxisLabel: String? = nil,
         description: String? = nil,
         date: Date? = nil,
-        pointColour: PointColour? = nil
+        pointColour: PointColour? = nil,
+        color: Color? = nil
     ) {
         self.value = value
         self.xAxisLabel = xAxisLabel
         self.description = description
         self.date = date
         self.pointColour = pointColour
+        self.color = color
     }
 }

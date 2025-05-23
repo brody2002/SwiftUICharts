@@ -1,36 +1,42 @@
 //
-//  FilledLineChart.swift
-//  
+//  LineChartView.swift
+//  LineChart
 //
-//  Created by Will Dale on 23/01/2021.
+//  Created by Will Dale on 27/12/2020.
 //
 
 import SwiftUI
 
 /**
- View for creating a filled line chart.
+ View for drawing a line chart.
  
  Uses `LineChartData` data model.
  
  # Declaration
+ 
  ```
- FilledLineChart(chartData: data)
+ LineChart(chartData: data)
  ```
  
  # View Modifiers
+ 
  The order of the view modifiers is some what important
  as the modifiers are various types for stacks that wrap
  around the previous views.
+ 
  ```
- .touchOverlay(chartData: data)
  .pointMarkers(chartData: data)
- .averageLine(chartData: data,
-              strokeStyle: StrokeStyle(lineWidth: 3,dash: [5,10]))
+ .touchOverlay(chartData: data, specifier: "%.0f")
  .yAxisPOI(chartData: data,
-           markerName: "50",
-           markerValue: 50,
+           markerName: "Something",
+           markerValue: 110,
+           labelPosition: .center(specifier: "%.0f"),
+           labelColour: Color.white,
+           labelBackground: Color.blue,
            lineColour: Color.blue,
            strokeStyle: StrokeStyle(lineWidth: 3, dash: [5,10]))
+ .averageLine(chartData: data,
+              strokeStyle: StrokeStyle(lineWidth: 3, dash: [5,10]))
  .xAxisGrid(chartData: data)
  .yAxisGrid(chartData: data)
  .xAxisLabels(chartData: data)
@@ -38,24 +44,20 @@ import SwiftUI
  .infoBox(chartData: data)
  .floatingInfoBox(chartData: data)
  .headerBox(chartData: data)
- .legends(chartData: data)
+ .legends(chartData: data, columns: [GridItem(.flexible()), GridItem(.flexible())])
  ```
  */
-public struct FilledLineChart<ChartData>: View where ChartData: LineChartData {
+public struct LineChart<ChartData>: View where ChartData: LineChartData {
     
     @ObservedObject private var chartData: ChartData
     @State private var timer: Timer?
+    private let isSegmented: Bool
     
-    private let minValue: Double
-    private let range: Double
-    
-    /// Initialises a filled line chart
+    /// Initialises a line chart view.
     /// - Parameter chartData: Must be LineChartData model.
-    public init(chartData: ChartData) {
+    public init(chartData: ChartData, isSegmented: Bool) {
+        self.isSegmented = isSegmented
         self.chartData = chartData
-        self.minValue = chartData.minValue
-        self.range = chartData.range
-        self.chartData.isFilled = true
     }
     
     public var body: some View {
@@ -68,10 +70,10 @@ public struct FilledLineChart<ChartData>: View where ChartData: LineChartData {
                     {
                         LineChartColourSubView(chartData: chartData,
                                                dataSet: chartData.dataSets,
-                                               minValue: minValue,
-                                               range: range,
+                                               minValue: chartData.minValue,
+                                               range: chartData.range,
                                                colour: colour,
-                                               isFilled: true)
+                                               isFilled: false)
                     } else if chartData.dataSets.style.lineColour.colourType == .gradientColour,
                               let colours = chartData.dataSets.style.lineColour.colours,
                               let startPoint = chartData.dataSets.style.lineColour.startPoint,
@@ -79,12 +81,12 @@ public struct FilledLineChart<ChartData>: View where ChartData: LineChartData {
                     {
                         LineChartColoursSubView(chartData: chartData,
                                                 dataSet: chartData.dataSets,
-                                                minValue: minValue,
-                                                range: range,
+                                                minValue: chartData.minValue,
+                                                range: chartData.range,
                                                 colours: colours,
                                                 startPoint: startPoint,
                                                 endPoint: endPoint,
-                                                isFilled: true)
+                                                isFilled: false)
                     } else if chartData.dataSets.style.lineColour.colourType == .gradientStops,
                               let stops = chartData.dataSets.style.lineColour.stops,
                               let startPoint = chartData.dataSets.style.lineColour.startPoint,
@@ -93,12 +95,12 @@ public struct FilledLineChart<ChartData>: View where ChartData: LineChartData {
                         let stops = GradientStop.convertToGradientStopsArray(stops: stops)
                         LineChartStopsSubView(chartData: chartData,
                                               dataSet: chartData.dataSets,
-                                              minValue: minValue,
-                                              range: range,
+                                              minValue: chartData.minValue,
+                                              range: chartData.range,
                                               stops: stops,
                                               startPoint: startPoint,
                                               endPoint: endPoint,
-                                              isFilled: true)
+                                              isFilled: false)
                     }
                 }
                 // Needed for axes label frames

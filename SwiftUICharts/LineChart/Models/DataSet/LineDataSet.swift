@@ -13,7 +13,7 @@ import SwiftUI
  Contains information specific to each line within the chart .
  */
 public struct LineDataSet: CTLineChartDataSet, DataFunctionsProtocol {
-    
+    public var isSegmented: Bool
     public let id: UUID = UUID()
     public var dataPoints: [LineChartDataPoint]
     public var legendTitle: String
@@ -30,12 +30,14 @@ public struct LineDataSet: CTLineChartDataSet, DataFunctionsProtocol {
         dataPoints: [LineChartDataPoint],
         legendTitle: String = "",
         pointStyle: PointStyle = PointStyle(),
-        style: LineStyle = LineStyle()
+        style: LineStyle = LineStyle(),
+        isSegmented: Bool = false
     ) {
         self.dataPoints = dataPoints
         self.legendTitle = legendTitle
         self.pointStyle = pointStyle
         self.style = style
+        self.isSegmented = isSegmented
     }
     
     public typealias ID = UUID
