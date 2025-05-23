@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
     /**
      View modifier to conditionally add a view modifier.
      
@@ -22,7 +22,7 @@ extension View {
     }
 }
 
-extension View {
+public extension View {
     /**
      View modifier to conditionally add a view modifier else add a different one.
      
@@ -41,7 +41,7 @@ extension View {
     }
 }
 
-extension View {
+public extension View {
     /**
      Start animation when the view appears.
      
@@ -103,7 +103,7 @@ extension View {
     }
 }
 
-extension Double {
+public extension Double {
     /**
      Simple, neat divide.
      */
@@ -117,7 +117,7 @@ extension Double {
         self / Double(divideBy)
     }
 }
-extension CGFloat {
+public extension CGFloat {
     /**
      Simple, neat divide.
      */
@@ -132,7 +132,7 @@ extension CGFloat {
     }
 }
 
-extension Color {
+public extension Color {
     /// Returns the relevant system background colour for the device.
     public static var systemsBackground: Color {
         #if os(iOS)
